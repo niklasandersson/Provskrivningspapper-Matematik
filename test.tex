@@ -1,0 +1,129 @@
+\documentclass[a4paper,10pt,twoside]{article}
+\usepackage[swedish,english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{tikz}
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{mathptmx} % Times New Roman
+
+% --- MARGINALER ---
+\geometry{
+    a4paper,
+    left=10mm,
+    right=10mm,
+    top=10mm,
+    bottom=15mm,
+}
+
+% --- KOMMANDO FÖR IKONEN (Nu utan triangel för att matcha pappret) ---
+\newcommand{\provPapperIkon}{%
+\begin{tikzpicture}[baseline=0.0ex, scale=0.15]
+    % Själva pappersbladet
+    \draw[thick, gray!60] (0,0) rectangle (1,1.4);
+    % Några små linjer inuti ikonen
+    \draw[gray!30] (0.2,0.4) -- (0.8,0.4);
+    \draw[gray!30] (0.2,0.7) -- (0.8,0.7);
+    \draw[gray!30] (0.2,1.0) -- (0.8,1.0);
+\end{tikzpicture}%
+}
+
+\begin{document}
+\pagestyle{empty}
+\arrayrulecolor{gray!60}
+
+% ==========================================
+% SIDA 1 - FRAMSIDA
+% ==========================================
+
+% --- SIDHUVUD (Namn och Datum) ---
+\noindent
+\begin{tabularx}{\textwidth}{|X|p{4.5cm}|}
+    \hline
+    Namn: & Datum: \\
+    \vspace{0.6cm} & \\ \hline
+\end{tabularx}
+
+% --- RAMAR FRAMSIDA ---
+\begin{tikzpicture}[remember picture, overlay]
+    \begin{scope}[shift={(current page.north west)}, xshift=10mm, yshift=-27mm]
+        
+        % 1. SKRIVYTA (Vänster)
+        \draw[thick, gray!80] (0,0) rectangle (14.5,-25.0);
+        \foreach \x in {0.5,1,...,14.0} {
+            \foreach \y in {-0.5,-1,...,-24.5} {
+                \fill[gray!60] (\x,\y) circle (0.8pt);
+            }
+        }
+        
+        \node[anchor=west, text=gray!80] at (0.1,-0.25) {Endast svar ger inga poäng om inte annat anges i uppgiften.};
+        \node[anchor=west, text=gray!80] at (0.1,-0.75) {Var noga med att redovisa fullständiga lösningar och motivera dina svar.};
+
+        % 2. ANTECKNINGSKOLUMN (Höger)
+        \draw[thick, gray!60] (15,0) rectangle (19,-25.0);
+        
+        \draw[gray!60] (15,-1.2) -- (19,-1.2); 
+        \node[anchor=north west] at (15.1,-0.1) {Sidnr:};
+        
+        \draw[gray!60] (15,-2.4) -- (19,-2.4);
+        \node[anchor=north west] at (15.1,-1.3) {Uppgift nr:};
+        
+        \node[anchor=north west] at (15.1,-2.6) {Lärarens};
+        \node[anchor=north west] at (15.1,-3.1) {anteckning:};
+        
+        \draw[gray!60] (15,-23.5) -- (19,-23.5);
+        \node[anchor=north west] at (15.1,-23.6) {Poäng:};
+
+        % 3. INSTRUKTION NEDERST (Med ikon)
+        \node[anchor=north west] at (0,-25.3) {
+            \begin{minipage}{14.5cm}
+                Behandla endast en uppgift per sida. Fortsätt på baksidan $\rightarrow$
+            \end{minipage}
+        };
+    \end{scope}
+\end{tikzpicture}
+
+\newpage
+
+% ==========================================
+% SIDA 2 - BAKSIDA
+% ==========================================
+
+\begin{tikzpicture}[remember picture, overlay]
+    % Samma yshift och xshift som framsidan för att kolumnen ska ligga på samma sida
+    \begin{scope}[shift={(current page.north west)}, xshift=10mm, yshift=-15mm]
+        
+        % 1. SKRIVYTA (Vänster på baksidan också)
+        \draw[thick, gray!80] (0,0) rectangle (14.5,-26.2);
+        \foreach \x in {0.5,1,...,14.0} {
+            \foreach \y in {-0.5,-1,...,-25.5} {
+                \fill[gray!60] (\x,\y) circle (0.8pt);
+            }
+        }
+
+        % 2. ANTECKNINGSKOLUMN (Höger på baksidan)
+        \draw[thick, gray!60] (15,0) rectangle (19,-26.2);
+        
+        \draw[gray!60] (15,-1.2) -- (19,-1.2); 
+        \node[anchor=north west] at (15.1,-0.1) {Sidnr:};
+        
+        \draw[gray!60] (15,-2.4) -- (19,-2.4); 
+        \node[anchor=north west] at (15.1,-1.3) {Uppgift nr:};
+        
+        \node[anchor=north west] at (15.1,-2.6) {Lärarens};
+        \node[anchor=north west] at (15.1,-3.1) {anteckning:};
+        
+        \draw[gray!60] (15,-24.7) -- (19,-24.7);
+        \node[anchor=north west] at (15.1,-24.8) {Poäng:};
+        
+        % 3. INSTRUKTION NEDERST
+        \node[anchor=north west] at (0,-26.5) {
+            \begin{minipage}{14.5cm}
+                Behandla endast en uppgift per sida. Fortsätt på nytt blad \provPapperIkon
+            \end{minipage}
+        };
+    \end{scope}
+\end{tikzpicture}
+
+\end{document}
